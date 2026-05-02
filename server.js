@@ -23,6 +23,10 @@ mongoose
 
 // Routes
 
+app.get("/", (req, res) => {
+  res.send("TaskForge API is live");
+});
+
 // GET all tasks
 app.get("/tasks", async (req, res) => {
   try {
@@ -32,7 +36,7 @@ app.get("/tasks", async (req, res) => {
     });
     res.json(tasks);
   } catch (err) {
-    console.error(err);
+    console.error("GET /tasks error:", err);
     res.status(500).json({ message: "Failed to fetch tasks" });
   }
 });
@@ -41,16 +45,22 @@ app.get("/tasks", async (req, res) => {
 app.post("/tasks", async (req, res) => {
   try {
     const task = new Task({
-      title: req.body.text,
+      title: req.body.title,
       status: req.body.status || "todo",
       priority: req.body.priority || "medium",
       order: Date.now(),
     });
 
     await task.save();
-    res.status(201).json(task);
+    res.status(201).json({
+      id: task._id,
+      title: task.title,
+      status: task.status,
+      priority: task.priority,
+      createdAt: task.createdAt,
+      order: task.order,
+    });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Failed to create task" });
   }
 });

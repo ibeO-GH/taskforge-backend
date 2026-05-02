@@ -1,23 +1,22 @@
 const mongoose = require("mongoose");
 
-const taskSchema = new mongoose.Schema({
-  title: String,
-  status: {
-    type: String,
-    default: "todo",
+const taskSchema = new mongoose.Schema(
+  {
+    title: String,
+    status: {
+      type: String,
+      default: "todo",
+    },
+    priority: {
+      type: String,
+      default: "medium",
+    },
+    order: {
+      type: Number,
+      default: 0,
+    },
   },
-  priority: {
-    type: String,
-    default: "medium",
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  order: {
-    type: Number,
-    default: 0,
-  },
-});
+  { timestamps: true },
+);
 
 module.exports = mongoose.model("Task", taskSchema);
