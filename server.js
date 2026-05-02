@@ -32,6 +32,7 @@ app.get("/tasks", async (req, res) => {
     });
     res.json(tasks);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Failed to fetch tasks" });
   }
 });
@@ -49,6 +50,7 @@ app.post("/tasks", async (req, res) => {
     await task.save();
     res.status(201).json(task);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Failed to create task" });
   }
 });
