@@ -78,6 +78,10 @@ app.put("/tasks/:id", async (req, res) => {
       { new: true },
     );
 
+    if (!updatedTask) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
     res.json(updatedTask);
   } catch (err) {
     res.status(500).json({ message: "Failed to update task" });
