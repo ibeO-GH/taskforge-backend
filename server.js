@@ -44,7 +44,7 @@ app.get("/tasks", async (req, res) => {
 // CREATE task
 app.post("/tasks", async (req, res) => {
   try {
-    if (!req.body.title?.trim()) {
+    if (typeof req.body.title !== "string" || !req.body.title.trim()) {
       return res.status(400).json({ message: "Title is required" });
     }
     const title = req.body.title.trim();
